@@ -1,0 +1,39 @@
+%TAD
+
+\subsection{Position}
+
+\begin{tad}
+\tadNom{Position}
+\tadDependances{\naturel}
+
+\begin{tadOperations}{Coup}
+  \tadOperation{creerPosition}{ \tadDeuxParams{\naturel}{\naturel} }{ \tadUnParam{Position} }
+  \tadOperation{abscisse}{\tadUnParam{Position}}{\tadUnParam{\naturel}}
+  \tadOperation{ordonne}{\tadUnParam{Position}}{\tadUnParam{\naturel}}
+  \tadOperation{egales}{\tadDeuxParams{Position}{Position}}{\tadUnParam{\booleen}}
+  \tadOperation{positionEnChaine}{\tadUnParam{Position}}{\tadUnParam{\chaine}}
+  \tadOperation{chaineEnPosition}{\tadUnParam{\chaine}{\tadUnParam{Position}}}
+  \tadOperation{positionAdjacente}{\tadDeuxParams{Position}{Direction}}{\tadUnParam{Position}}
+\end{tadOperations}
+
+\begin{tadSemantiques}{Dictionnaire}
+  \tadSemantique{creerPosition}{Creer une nouvelle position avec l'abscisse et l'ordonée données}
+  \tadSemantique{abscisse}{Retourne l'abscisse d'une position donnée}
+  \tadSemantique{ordonne}{Retourne l'ordonnée d'une position donnée}
+  \tadSemantique{egales}{Détermine si deux position ont des ordonnées et abscisse égales}
+  \tadSemantique{positionEnChaine}{Convertit une position en une chaîne de caractères contenant sa représentation en notation standard d'Othello (abscisses numérotées de a à h, suivies des ordonnées numérotées de 1 à 8)}
+  \tadSemantique{chaineEnPosition}{Opération inverse de positionEnChaine. Convertit une chaîne de caractères en la position qu'elle représente}
+  \tadSemantique{positionAdjacente}{Retourne la position adjacente à la postion donnée dans la direction donnée}
+\end{tadSemantiques}
+
+\begin{tadAxiomes}
+  \tadAxiome{abscisse(position(x,y))=x}
+  \tadAxiome{ordonnee(position(x,y))=y}
+  \tadAxiome{ordonnee(positionAdjacente(position(x,y)),NORD)=y-1}
+  \tadAxiome{abscisse(positionAdjacente(position(x,y)),OUEST)=x+1}
+  \tadAxiome{egales(position(x,y),position(x,y)) = VRAI}
+  \tadAxiome{egales(position(x,y+1),position(x,y)) = FAUX}
+  \tadAxiome{chaineEnPosition(chaineEnPosition(creerPosition(x,y))) = creerPosition(x,y)}
+\end{tadAxiomes}
+
+\end{tad}

@@ -1,0 +1,220 @@
+\subsection{Partie}
+
+\subsubsection{Type}
+\begin{algorithme}
+	\begin{enregistrement}{Partie}
+		\champEnregistrement{joueurs}{\tableauUneDimension{}{de}{Joueur}}
+		\champEnregistrement{nombreJoueurs}{\naturel}
+		\champEnregistrement{plateau}{Plateau}
+		\champEnregistrement{estTournoi}{\booleen}
+		\champEnregistrement{couleurProgramme}{Couleur}
+	\end{enregistrement}
+\end{algorithme}
+	
+\subsubsection{Fonctions TAD}
+\paragraph{creerPartieClassique}
+\begin{algorithme}
+	\small
+	\procedure
+  	{creerPartieClassique}
+  	{\paramEntreeSortie{partie : Partie} \paramEntree{joueurNoir, joueurBlanc : Joueur}}
+  	{plateau : Plateau}
+  	{
+  		\affecter{partie.nombreJoueurs}{2}
+  		\affecter{partie.joueurs[1]}{joueurNoir}
+  		\affecter{partie.joueurs[2]}{joueurBlanc}
+  		\affecter{plateau}{creerPlateau()}
+  		\instruction{initialisePionDebut(plateau)}
+  		\affecter{partie.plateau}{plateau}
+  		\affecter{partie.estTournoi}{Faux}
+  		\affecter{partie.couleurProgramme}{SansCouleur()}
+  	}
+\end{algorithme}
+
+\paragraph{creerPartieTournoi}
+\begin{algorithme}
+	\small
+	\procedure
+  	{creerPartieTournoi}
+  	{\paramEntreeSortie{partie : Partie} \paramEntree{joueurNoir, joueurBlanc : Joueur, couleurProgramme : Couleur}}
+  	{plateau : Plateau}
+  	{
+  		\affecter{partie.nombreJoueurs}{2}
+  		\affecter{partie.joueurs[1]}{joueurNoir}
+  		\affecter{partie.joueurs[2]}{joueurBlanc}
+  		\affecter{plateau}{creerPlateau()}
+  		\instruction{initialisePionDebut(plateau)}
+  		\affecter{partie.plateau}{plateau}
+  		\affecter{partie.estTournoi}{Vrai}
+  		\affecter{partie.couleurProgramme}{couleurProgramme}
+  	}
+\end{algorithme}
+
+\paragraph{estTournoi}
+\begin{algorithme}
+	\small
+	\fonction
+  	{estTournoi}
+  	{partie : Partie}
+  	{\booleen}
+  	{}
+  	{
+		\retourner{partie.estTournoi}
+  	}
+\end{algorithme}
+
+\paragraph{obtenirNombreJoueurs}
+\begin{algorithme}
+	\small
+	\fonction
+  	{obtenirNombreJoueurs}
+  	{partie : Partie}
+  	{\naturel}
+  	{}
+  	{
+		\retourner{partie.nombreJoueurs}
+  	}
+\end{algorithme}
+
+\paragraph{obtenirJoueurs}
+\begin{algorithme}
+	\small
+	\fonction
+  	{obtenirNombreJoueurs}
+  	{partie : Partie}
+    {\tableauUneDimension{}{de}{Joueur}}
+  	{}
+  	{
+		\retourner{partie.joueurs}
+  	}
+\end{algorithme}
+
+\paragraph{obtenirPlateau}
+\begin{algorithme}
+	\small
+	\fonction
+	{obtenirPlateau}
+    {partie : Partie}
+    {Plateau}
+  	{}
+  	{
+		\retourner{partie.plateau}
+  	}
+\end{algorithme}
+
+\paragraph{obtenirCouleurProgramme}
+\begin{algorithme}
+	\small
+	\fonctionAvecPreconditions
+	{obtenirCouleurProgramme}
+    {partie : Partie}
+    {Couleur}
+    {estTournoi(partie)}
+  	{}
+  	{
+		\retourner{partie.couleurProgramme}
+  	}
+\end{algorithme}
+
+
+\paragraph{peutJouer}
+\begin{algorithme}
+	\small
+	\fonction
+	{peutJouer}
+    {partie : Partie, joueur : Joueur}
+    {\booleen}
+  	{plateau : Plateau \\
+  	couleurJoueur : Couleur \\
+  	listeCoups : Coups}
+  	{
+		\affecter{plateau}{obtenirPlateau(partie)}
+		\affecter{couleurJoueur}{obtenirCouleur(joueur)}
+		\affecter{listeCoups}{listeCoupsPossibles(plateau, couleurJoueur)}
+		\retourner{non estVide(listeCoups)}
+  	}
+\end{algorithme}
+
+\paragraph{estFini}
+\begin{algorithme}
+	\small
+	\fonction
+	{estFini}
+	{partie : Partie}
+    {\booleen}
+    {
+    	plateau : Plateau \\
+    	joueurs : \tableauUneDimension{}{de}{Joueur} \\
+    	nbJoueurs, i : \naturel \\
+    	resultat : \booleen \\
+    	listeCoups : Coups \\
+    	couleurJoueur : Couleur \\	
+    }
+    {
+    	\affecter{plateau}{obtenirPlateau(partie)}
+    	\affecter{joueurs}{obtenirJoueurs(partie)}
+    	\affecter{nbJoueurs}{obtenirNombreJoueurs(partie)}
+    	\affecter{i}{0}
+    	\affecter{resultat}{Vrai}
+    	\tantque{i < nbJoueurs et resultat}
+    	{
+    		\affecter{couleurJoueur}{obtenirCouleur(joueur)}
+    		\affecter{listeCoups}{listeCoupsPossibles(plateau, couleurJoueur)}
+    		\affecter{resultat}{estVide(listeCoups)}
+    	}
+    	\retourner{resultat}
+    }
+    
+\end{algorithme}
+
+\subsubsection{Autres fonctions}
+
+\paragraph{lancerPartie}
+\begin{algorithme}
+	\small
+	\procedure
+  	{lancerPartie}
+  	{\paramEntreeSortie{partie : Partie} \paramEntree{ihm : IHM}}
+  	{
+  		plateau : Plateau \\
+  		listeJoueur : \tableauUneDimension{}{de}{Joueur}\\
+  		nombreJoueur, nombreTour : \naturel \\
+  		joueurQuiJoue : Joueur \\
+  		coup : Coup		
+  	}
+  	{
+  		\affecter{listeJoueur}{obtenirJoueurs(partie)}
+  		\affecter{nombreJoueur}{obtenirNombreJoueur(partie)}
+  		\affecter{plateau}{obtenirPlateau(partie)}
+  		\affecter{nombreTour}{0}
+  		\tantque{non estFini(partie)}
+  		{
+  			\affecter{joueurQuiJoue}{listeJoueur[nombreTour mod nombreJoueur]}
+  			\instruction{afficherPlateau(ihm, plateau)}
+  			\sialorssinon{peutJouer(partie, joueurQuiJoue}
+  			{
+  				\affecter{coup}{obtenirCoup(plateau, joueurQuiJoue)}
+  				\sialors{estUnCoupPossible(plateau, coup)}
+  				{
+  					\instruction{jouerCoup(plateau, coup)}
+  					\sialors{estTournoi(partie) et obtenirCouleur(joueurQuiJoue) = obtenirCouleurProgramme(partie)}
+  					{
+  						\instruction{afficherTexte(ihm, positionEnChaine(obtenirPosition(coup)))}
+  					}
+  				}
+  			}
+  			{
+  				\sialors{estTournoi(partie)}
+  				{
+  					\sialorssinon{obtenirCouleur(joueurQuiJoue) $\neq$ obtenirCouleurProgramme(partie)}
+  					{
+  						\instruction{lire()}
+  					}
+  					{
+  						\instruction{afficherTexte(ihm, "passe\textbackslash n")}
+  					}
+  				}
+  			}
+  		}
+  	}
+\end{algorithme}

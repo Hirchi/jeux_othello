@@ -1,0 +1,44 @@
+\subsection{Couleur}
+  \begin{tad}
+    \tadNom{Couleur}\tadDependances{\booleen, \caractere}
+    \tadParametres{}
+    \tadDependances{\booleen}
+
+    \begin{tadOperations}{Couleur}
+      \tadOperation{blanc}{}{\tadUnParam{Couleur}}
+      \tadOperation{noir}{}{\tadUnParam{Couleur}}
+      \tadOperation{SansCouleur}{}{\tadUnParam{Couleur}}
+      \tadOperation{complément}{Couleur}{\tadUnParam{Couleur}}
+      \tadOperation{estBlanc}{Couleur}{\tadUnParam{\booleen}}
+      \tadOperation{estNoir}{Couleur}{\tadUnParam{\booleen}}
+      \tadOperation{estSansCouleur}{Couleur}{\tadUnParam{\booleen}}
+      \tadOperation{couleurVersChar}{Couleur}{\tadUnParam{\caractere}}
+      \tadOperation{charVersCouleur}{\caractere}{\tadUnParam{Couleur}}
+    \end{tadOperations}
+
+    \begin{tadSemantiques}{SansCouleur}
+      \tadSemantique{blanc}{Retourne la valeur représentant la couleur blanche}
+      \tadSemantique{noir}{Retourne la valeur représentant la couleur noire}
+      \tadSemantique{SansCouleur}{Retourne la valeur représentant l'absence de couleur (dans le cas d'une cellule vide)}
+      \tadSemantique{complément}{Verifie si couleur représente le blanc}
+      \tadSemantique{estBlanc}{Verifie si couleur représente le noir}
+      \tadSemantique{estNoir}{Verifie si couleur représente l'absence de couleur}
+      \tadSemantique{estSansCouleur}{Renvoie la couleur opposée à celle représentée par couleur}
+      \tadSemantique{couleurVersChar}{Renvoie le caractère représentant la couleur indiquée}
+      \tadSemantique{charVersCouleur}{Convertit un caractère en la couleur qu'il représente}
+    \end{tadSemantiques}
+
+    \begin{tadAxiomes}
+      \tadAxiome{estBlanc(noir()) = Faux}
+      \tadAxiome{estBlanc(blanc()) = Vrai}
+      \tadAxiome{estNoir(noir()) = Vrai}
+      \tadAxiome{estNoir(blanc()) = Faux}
+      \tadAxiome{complément(blanc()) = noir}
+      \tadAxiome{complément(noir()) = blanc}
+      \tadAxiome{couleurVersChar(charVersCouleur(noir())) = noir}
+      \tadAxiome{charVersCouleur('N') = noir}
+      \tadAxiome{charVersCouleur('B') = blanc}
+      \tadAxiome{couleurVersChar(blanc()) = 'B'}
+      \tadAxiome{couleurVersChar(noir()) = 'N'}
+    \end{tadAxiomes}
+  \end{tad}

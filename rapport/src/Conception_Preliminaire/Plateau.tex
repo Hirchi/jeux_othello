@@ -1,0 +1,87 @@
+\subsection{Plateau}
+
+\begin{algorithme}
+  \signaturefonction{creerPlateau}{largeur : \naturel; hauteur : \naturel}{Plateau}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureProcedureAvecPreconditions
+    {initialisePionDebut}
+    {\paramEntreeSortie{p : Plateau)}}
+    {obtenirHauteur(p) = 8 ; obtenirLargeur(p) = 8}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonction{obtenirCellules}
+    {Plateau}
+    {\tableauUneDimension{64}{de}{Cellule}}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonctionAvecPreconditions{obtenirCellule}
+    {p : Plateau; pos : Position}
+    {Cellule}
+    {1 $\le$ abcsisse(pos) $\le$ obtenirLargeur(p) ; 1 $\le$ ordonnee(pos) $\le$ 8}
+\end{algorithme}
+
+\begin{algorithme}
+  \signaturefonction{estRempli}{p : Plateau}{\booleen}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureProcedure{jouerCoup}{\paramEntreeSortie{p : Plateau}\paramEntree{c : Coup}}
+\end{algorithme}
+
+\begin{algorithme}
+  \signaturefonction{estUnCoupPossible}{p : Plateau, c : Coup}{\booleen}
+\end{algorithme}
+
+\begin{algorithme}
+  \signaturefonction{nombrePions}{p : Plateau, couleurJoueur : Couleur}{\naturel}
+\end{algorithme}
+
+\begin{algorithme}
+  \signaturefonction{plateauEnString}
+    {p : plateau}
+    {c : \chaine}
+\end{algorithme}
+
+
+\begin{algorithme}
+  \signaturefonction{stringEnPlateau}
+    {c : \chaine}
+    {p : plateau}
+\end{algorithme}
+
+
+\begin{algorithme}
+  \signaturefonction{obtenirLargeur}{p : Plateau}{\naturel}
+\end{algorithme}
+
+
+\begin{algorithme}
+  \signaturefonction{obtenirHauteur}{p : Plateau}{\naturel}
+\end{algorithme}
+
+
+\begin{algorithme}
+  \signatureProcedure
+    {detruitPlateau}
+    {\paramEntreeSortie{p : Plateau)}}
+\end{algorithme}
+
+\begin{algorithme}
+  \signaturefonction{obtenirCouleur}{p : Plateau ; pos : Position}{Couleur}
+\end{algorithme}
+
+\begin{algorithme}
+  \signaturefonction{estDansLePlateau}{p : Plateau ; pos : Position}{\booleen}
+\end{algorithme}
+
+\begin{algorithme}
+  \signaturefonction{listeCoupsPossibles}{p : Plateau ; couleurRef : Couleur}{Coups}
+\end{algorithme}
+
+
+
+

@@ -1,0 +1,529 @@
+\subsection{Joueur}
+	\subsubsection{Type}
+
+		\begin{algorithme}
+			\begin{enregistrement}{Joueur}
+				\champEnregistrement{stratégie}{Stratégie}
+				\champEnregistrement{couleur}{Couleur}
+				\champEnregistrement{nom}{\chaine}
+			\end{enregistrement}
+		\end{algorithme}
+
+	\subsubsection{Fonctions TAD}
+		\paragraph{creerJoueur}
+			\begin{algorithme}
+				\fonction
+				{joueur}
+				{strat : Stratégie, coul : Couleur}
+				{Joueur}
+				{joueur : Joueur}
+				{
+				\affecter{joueur.stratégie}{strat}
+				\affecter{joueur.couleur}{coul}
+				\instruction{assignerNom(joueur)}
+				\retourner{joueur}
+				}
+			\end{algorithme}
+
+		\paragraph{creerJoueurNiveau}
+			\begin{algorithme}
+				\fonction
+				{joueur}
+				{strat : Stratégie, coul : Couleur, niveau : \naturel}
+				{Joueur}
+				{joueur : Joueur}
+				{
+				\affecter{joueur}{creerJoueur(strat, coul, niveau)}
+				\affecter{joueur.niveau}{niveau}
+				\retourner{joueur}
+				}
+			\end{algorithme}
+
+
+		\paragraph{obtenirStratégie}
+			\begin{algorithme}
+				\fonction
+				{obtenirStratégie}
+				{joueur : Joueur}
+				{Stratégie}
+				{}
+				{
+					\retourner{joueur.stratégie}
+				}
+			\end{algorithme}
+
+
+
+		\paragraph{obtenirCouleur}
+			\begin{algorithme}
+				\small
+				\fonction
+				{obtenirCouleur}
+				{joueur : Joueur}
+				{Couleur}
+				{}
+				{
+					\retourner{joueur.couleur}
+				}
+			\end{algorithme}
+
+		\paragraph{obtenirNom}
+			\begin{algorithme}
+				\small
+				\fonction
+				{obtenirNom}
+				{joueur : Joueur}
+				{\chaine}
+				{}
+				{
+					\retourner{joueur.nom}
+				}
+			\end{algorithme}
+
+	\paragraph{obtenirCoup}
+		\begin{algorithme}
+			\small
+			\fonction
+			{obtenirCoup}
+			{p : Plateau, joueur : Joueur}
+			{Coup}
+			{strat : Strategie \\
+			resultat : Coup}
+			{
+				\affecter{strat}{obtenirStrategie(joueur)}
+				\cas{strat}
+				{
+					\instruction{Humain() :}
+						\affecter{resultat}{obtenirCoupHumain(p, joueur)}
+					\instruction{IAMinMax() :}
+						\affecter{resultat}{obtenirCoupMinMax(p, joueur, niveau)}
+					\instruction{AlphaBeta() :}
+						\affecter{resultat}{obtenirCoupAlphaBeta(p, joueur, niveau)}
+				}
+				\retourner{resultat}
+			}
+		\end{algorithme}
+
+	\subsubsection{Fonctions privées Joueur}
+
+	\paragraph{assignerNom}
+		\begin{algorithme}
+			\small
+			\procedure
+			{assignerNom}
+			{\paramEntreeSortie{joueur : Joueur}}
+			{}
+			{
+				\sialorssinon{estBlanc(obtenirCouleur(joueur))}
+				{
+					\affecter{joueur.nom}{"blanc"}
+				}
+				{
+					\sialorssinon{estNoir(obtenirCouleur(joueur))}
+					{
+						\affecter{joueur.nom}{"noir"}
+					}
+					{
+						\affecter{joueur.nom}{"inconnu"}
+					}
+				}
+			}
+		\end{algorithme}
+
+	\paragraph{obtenirCoupHumain}
+		\begin{algorithme}
+			\small
+			\fonction
+			{obtenirCoupHumain}
+			{p : Plateau, joueurRef : Joueur}
+			{Coup}
+			{
+				estValide : \booleen \\
+				entree : \chaine \\
+				coupEntre : Coup
+			}
+			{
+				\affecter{estValide}{Faux}
+				\tantque{non estValide}
+				{
+					\affecter{entree}{lire()}
+					\affecter{coupEntre}{creerCoup(chaineEnposition(entree), obtenirCouleur(joueurRef))}
+					\affecter{estValide}{estUnCoupValide(p, coupEntre)}
+				}
+				\retourner{coupEntre}
+			}
+		\end{algorithme}
+		
+	\paragraph{obtenirCoupMinMax}
+		\begin{algorithme}
+			\small
+			\fonction
+			{obtenirCoupMinMax}
+			{p : Plateau, joueurRef : Joueur, niveau : \naturel}
+			{Coup}
+			{
+			
+			}
+			{
+				\retourner{MinMax(plateau, joueurRef, \pointeur{scorePosition}, niveau}
+			}
+		\end{algorithme}
+		
+	\paragraph{obtenirCoupAlphaBeta}
+		\begin{algorithme}
+			\small
+			\fonction
+			{obtenirCoupAlphaBeta}
+			{p : Plateau, joueurRef : Joueur, niveau : \naturel}
+			{Coup}
+			{
+			
+			}
+			{
+				\retourner{AlphaBeta(plateau, joueurRef, \pointeur{scorePosition}, niveau}
+			}
+		\end{algorithme}
+			
+	\subsubsection{Fonctions privées IA}
+	
+	\paragraph{scorePosition}
+		\begin{algorithme}
+			\small
+			\fonction
+			{scorePosition}
+			{plateau : Plateau, couleur : Couleur}
+			{\entier}
+			{
+				score : \entier \\
+				hauteur, largeur, ligne, col : \naturel \\
+				couleurCase : Couleur \\
+				pointPlateau : \tableauDeuxDimensions{1..8}{1..8}{d'}{\entier}
+			}
+			{
+				\affecter{pointPlateau}
+				{
+					\lbrack 500,-150,30,10,10,30,-150,500\rbrack, \\
+    				\lbrack -150,-250,0,0,0,0,-250,-150\rbrack, \\
+    				\lbrack 30,0,1,2,2,1,0,30\rbrack, \\
+    				\lbrack 10,0,2,16,16,2,0,10\rbrack, \\
+    				\lbrack 10,0,2,16,16,2,0,10\rbrack, \\
+    				\lbrack 30,0,1,2,2,1,0,30\rbrack, \\
+    				\lbrack -150,-250,0,0,0,0,-250,-150\rbrack, \\
+    				\lbrack 500,-150,30,10,10,30,-150,500\rbrack
+				}
+				\affecter{hauteur}{obtenirHauteur(plateau)}
+				\affecter{largeur}{obtenirLargeur(plateau)}
+				\pour{ligne}{1}{8}{}
+				{
+					\pour{col}{1}{8}{}
+					{
+						\affecter{couleurCase}{obtenirCouleur(plateau, creerPosition(col, ligne)}
+						\sialorssinon{couleurCase = couleur}
+						{
+							\affecter{score}{score+pointPlateau[col,ligne]}
+						}
+						{
+							\sialors{couleurCase = complement(couleur)}
+							{
+								\affecter{score}{score-pointPlateau[col, ligne]}
+							}
+						}
+					}
+				}
+				\retourner{score}
+			}
+		\end{algorithme}
+		
+	\subsubsection{Fonctions privées MinMax}
+	
+	\paragraph{MinMaxMin}
+	\begin{algorithme}
+	\small
+	\fonction
+	{MinMaxMin}
+	{plateau : Plateau, couleurJoueurEnCours : Couleur, profondeur : \naturel, eval : Fonction(Plateau, Couleur)}
+	{\entier}
+	{
+		min, tmp : \entier \\
+		platTmp : Plateau \\
+		platString : \chaine \\
+		listeCoups : Coups \\
+		i, nbCoups : \naturel
+	}
+	{
+		\sialors{profondeur $\leq$ ou estRempli(plateau)}
+		{
+			\retourner{eval(plateau, couleurJoueurEnCours)}
+		}
+		\sialors{nombrePion(plateau, couleurJoueurEnCours) = 0}
+		{
+			\retourner{-10000}
+		}
+		\sialors{nombrePion(plateau, complement(couleurJoueurEnCours) = 0)}
+		{
+			\retourner{10000}
+		}
+		\affecter{min}{9999999}
+		\affecter{listeCoups}{listeCoupsPossibles(plateau, complement(couleurJoueurEnCours)}
+		\affecter{nbCoups}{longueur(listeCoups)}
+		\sialors{nbCoups=0}
+		{
+			\retourner{MinMaxMax(plateau, couleurJoueurEnCours, profondeur-1, eval)}
+		}
+		\affecter{platString}{plateauEnString(plateau)}
+		\affecter{platTmp}{stringEnPlateau(plateau)}
+		\affecter{i}{1}
+		\tantque{i $\leq$ nbCoups}
+		{
+			\instruction{jouerCoup(platTmp, obtenirCoup(listeCoups, i)}
+			\affecter{tmp}{MinMaxMax(platTmp, couleurJoueurEnCours, profondeur-1, eval)}
+			\sialors{i=1 ou tmp<min}
+			{
+				\affecter{min}{tmp}
+			}
+			\affecter{i}{i+1}
+		}
+		\retourner{min}
+	}
+	\end{algorithme}
+	
+	\paragraph{MinMaxMax}
+	\begin{algorithme}
+	\small
+	\fonction
+	{MinMaxMax}
+	{plateau : Plateau, couleurJoueurEnCours : Couleur, profondeur : \naturel, eval : Fonction(Plateau, Couleur)}
+	{\entier}
+	{
+		max, tmp : \entier \\
+		platTmp : Plateau \\
+		platString : \chaine \\
+		listeCoups : Coups \\
+		i, nbCoups : \naturel
+	}
+	{
+		\sialors{profondeur $\leq$ ou estRempli(plateau)}
+		{
+			\retourner{eval(plateau, couleurJoueurEnCours)}
+		}
+		\sialors{nombrePion(plateau, couleurJoueurEnCours) = 0}
+		{
+			\retourner{-10000}
+		}
+		\sialors{nombrePion(plateau, complement(couleurJoueurEnCours) = 0)}
+		{
+			\retourner{10000}
+		}
+		\affecter{max}{-9999999}
+		\affecter{listeCoups}{listeCoupsPossibles(plateau, complement(couleurJoueurEnCours)}
+		\affecter{nbCoups}{longueur(listeCoups)}
+		\sialors{nbCoups=0}
+		{
+			\retourner{MinMaxMin(plateau, couleurJoueurEnCours, profondeur-1, eval)}
+		}
+		\affecter{platString}{plateauEnString(plateau)}
+		\affecter{platTmp}{stringEnPlateau(plateau)}
+		\affecter{i}{1}
+		\tantque{i $\leq$ nbCoups}
+		{
+			\instruction{jouerCoup(platTmp, obtenirCoup(listeCoups, i)}
+			\affecter{tmp}{MinMaxMin(platTmp, couleurJoueurEnCours, profondeur-1, eval)}
+			\sialors{i=1 ou tmp>max}
+			{
+				\affecter{max}{tmp}
+			}
+			\affecter{i}{i+1}
+		}
+		\retourner{min}
+	}
+	\end{algorithme}
+	
+	\paragraph{MinMax}
+	\begin{algorithme}
+		\small
+		\fonction
+		{MinMax}
+		{plateau : Plateau, joueur : Joueur, eval : Fonction(Plateau, Couleur), profondeur : \naturel}
+		{Coup}
+		{
+			max, tmp : \entier \\
+			platTmp : Plateau \\
+			platString : \chaine \\
+			listeCoups, listeCoupsMax : Coups \\
+			i, nbCoups : \naturel \\
+			couleurJoueurEnCours : Couleur
+		}
+		{
+			\affecter{couleurJoueurEnCours}{obtenirCouleur(joueur)}
+			\affecter{listeCoups}{listeCoupsPossibles(plateau, couleurJoueurEnCours)}
+			\affecter{nbCoups}{longueur(listeCoups)}
+			\affecter{platString}{plateauEnString(plateau)}
+			\affecter{platTmp}{stringEnPlateau(platString)}
+			\affecter{max}{-999999}
+			\pour{i}{1}{nbCoup}{}
+			{
+				\instruction{jouerCoup(platTmp, obtenirCoup(listeCoups, i)}
+				\affecter{tmp}{MinMaxMin(platTmp, couleurJoueurEnCours, profondeur-1, eval)}
+				\sialorssinon{i=1 ou tmp>max}
+				{
+					\affecter{max}{tmp}
+					\affecter{listeCoupsMax}{creerCoups}
+					\instruction{ajouterCoup(listeCoupsMax, obtenirCoup(listeCoups, i))}
+				}
+				{
+					\sialors{tmp=max}
+					{
+					\instruction{ajouterCoup(listeCoupsMax, obtenirCoup(listeCoups, i))}
+					}
+				}
+			}
+			\retourner{obtenirCoup(listeCoupsMax, naturelAleatoire(1, longueur(listeCoupsMax)))}
+		}
+	\end{algorithme}
+	
+	\subsubsection{Fonctions privées AlphaBeta}
+	\paragraph{AlphaBetaMin}
+	\begin{algorithme}
+	\small
+	\fonction
+	{AlphaBetaMin}
+	{plateau : Plateau, couleurJoueurEnCours : Couleur, profondeur : \naturel, eval : Fonction(Plateau, Couleur), maxPrecedent : \entier}
+	{\entier}
+	{
+		min, tmp : \entier \\
+		platTmp : Plateau \\
+		platString : \chaine \\
+		listeCoups : Coups \\
+		i, nbCoups : \naturel
+	}
+	{
+		\sialors{profondeur $\leq$ ou estRempli(plateau)}
+		{
+			\retourner{eval(plateau, couleurJoueurEnCours)}
+		}
+		\sialors{nombrePion(plateau, couleurJoueurEnCours) = 0}
+		{
+			\retourner{-10000}
+		}
+		\sialors{nombrePion(plateau, complement(couleurJoueurEnCours) = 0)}
+		{
+			\retourner{10000}
+		}
+		\affecter{min}{9999999}
+		\affecter{listeCoups}{listeCoupsPossibles(plateau, complement(couleurJoueurEnCours)}
+		\affecter{nbCoups}{longueur(listeCoups)}
+		\sialors{nbCoups=0}
+		{
+			\retourner{MinMaxMax(plateau, couleurJoueurEnCours, profondeur-1, eval)}
+		}
+		\affecter{platString}{plateauEnString(plateau)}
+		\affecter{platTmp}{stringEnPlateau(plateau)}
+		\affecter{i}{1}
+		\tantque{i $\leq$ nbCoups et min>maxPrecedent}
+		{
+			\instruction{jouerCoup(platTmp, obtenirCoup(listeCoups, i)}
+			\affecter{tmp}{AlphaBetaMax(platTmp, couleurJoueurEnCours, profondeur-1, eval, min)}
+			\sialors{i=1 ou tmp<min}
+			{
+				\affecter{min}{tmp}
+			}
+			\affecter{i}{i+1}
+		}
+		\retourner{min}
+	}
+	\end{algorithme}
+	
+	\paragraph{AlphaBetaMax}
+	\begin{algorithme}
+	\small
+	\fonction
+	{AlphaBetaMax}
+	{plateau : Plateau, couleurJoueurEnCours : Couleur, profondeur : \naturel, eval : Fonction(Plateau, Couleur) minPrecedent : \naturel}
+	{\entier}
+	{
+		max, tmp : \entier \\
+		platTmp : Plateau \\
+		platString : \chaine \\
+		listeCoups : Coups \\
+		i, nbCoups : \naturel
+	}
+	{
+		\sialors{profondeur $\leq$ ou estRempli(plateau)}
+		{
+			\retourner{eval(plateau, couleurJoueurEnCours)}
+		}
+		\sialors{nombrePion(plateau, couleurJoueurEnCours) = 0}
+		{
+			\retourner{-10000}
+		}
+		\sialors{nombrePion(plateau, complement(couleurJoueurEnCours) = 0)}
+		{
+			\retourner{10000}
+		}
+		\affecter{max}{-9999999}
+		\affecter{listeCoups}{listeCoupsPossibles(plateau, complement(couleurJoueurEnCours)}
+		\affecter{nbCoups}{longueur(listeCoups)}
+		\sialors{nbCoups=0}
+		{
+			\retourner{MinMaxMin(plateau, couleurJoueurEnCours, profondeur-1, eval)}
+		}
+		\affecter{platString}{plateauEnString(plateau)}
+		\affecter{platTmp}{stringEnPlateau(plateau)}
+		\affecter{i}{1}
+		\tantque{i $\leq$ nbCoups et minPrecedent > max}
+		{
+			\instruction{jouerCoup(platTmp, obtenirCoup(listeCoups, i)}
+			\affecter{tmp}{AlphaBetaMin(platTmp, couleurJoueurEnCours, profondeur-1, eval)}
+			\sialors{i=1 ou tmp>max}
+			{
+				\affecter{max}{tmp}
+			}
+			\affecter{i}{i+1}
+		}
+		\retourner{min}
+	}
+	\end{algorithme}
+	
+	\paragraph{AlphaBeta}
+	\begin{algorithme}
+		\small
+		\fonction
+		{AlphaBeta}
+		{plateau : Plateau, joueur : Joueur, eval : Fonction(Plateau, Couleur), profondeur : \naturel}
+		{Coup}
+		{
+			max, tmp : \entier \\
+			platTmp : Plateau \\
+			platString : \chaine \\
+			listeCoups, listeCoupsMax : Coups \\
+			i, nbCoups : \naturel \\
+			couleurJoueurEnCours : Couleur
+		}
+		{
+			\affecter{couleurJoueurEnCours}{obtenirCouleur(joueur)}
+			\affecter{listeCoups}{listeCoupsPossibles(plateau, couleurJoueurEnCours)}
+			\affecter{nbCoups}{longueur(listeCoups)}
+			\affecter{platString}{plateauEnString(plateau)}
+			\affecter{platTmp}{stringEnPlateau(platString)}
+			\affecter{max}{-999999}
+			\pour{i}{1}{nbCoup}{}
+			{
+				\instruction{jouerCoup(platTmp, obtenirCoup(listeCoups, i)}
+				\affecter{tmp}{AlphaBetaMin(platTmp, couleurJoueurEnCours, profondeur-1, eval, max)}
+				\sialorssinon{i=1 ou tmp>max}
+				{
+					\affecter{max}{tmp}
+					\affecter{listeCoupsMax}{creerCoups}
+					\instruction{ajouterCoup(listeCoupsMax, obtenirCoup(listeCoups, i))}
+				}
+				{
+					\sialors{tmp=max}
+					{
+					\instruction{ajouterCoup(listeCoupsMax, obtenirCoup(listeCoups, i))}
+					}
+				}
+			}
+			\retourner{obtenirCoup(listeCoupsMax, naturelAleatoire(1, longueur(listeCoupsMax)))}
+		}
+	\end{algorithme}
+	

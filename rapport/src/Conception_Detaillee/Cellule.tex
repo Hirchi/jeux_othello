@@ -1,0 +1,73 @@
+%Conection détaillée
+\subsection{Cellule}
+	\subsubsection{Type}
+		\begin{algorithme}
+			\begin{enregistrement}{Cellule}
+				\champEnregistrement{couleur}{Couleur}
+				\champEnregistrement{position}{Position}
+			\end{enregistrement}
+		\end{algorithme}
+
+
+	\subsubsection{Fonctions TAD}
+		\paragraph{creerCellule}
+		\begin{algorithme}
+			\fonction
+			{creerCellule}
+			{position : Position}
+			{Cellule}
+			{c : Cellule}
+			{
+				\affecter {c.position}{position}
+				\affecter {c.couleur}{NULL}
+				\retourner{c}
+			}
+		\end{algorithme}
+
+
+		\paragraph{obtenirPosition}
+		\begin{algorithme}
+		\fonction
+		{obtenirPosition}
+		{c : Cellule}
+		{Position}
+		{}
+		{
+			\retourner{c.position}
+		}
+		\end{algorithme}
+
+		\paragraph{obtenirCouleur}
+		\begin{algorithme}
+		\fonction
+		{obtenirCouleur}
+		{c : Cellule}
+		{Couleur}
+		{}
+		{
+			\retourner{c.couleur}
+		}
+		\end{algorithme}
+
+		\paragraph{placerCouleur}
+		\begin{algorithme}
+		\procedure
+		{placerCouleur}
+		{\paramEntreeSortie{cellule : Cellule} \paramEntree{couleur : Couleur}}
+		{}
+		{
+			\affecter{cellule.couleur}{couleur}
+		}
+		\end{algorithme}
+
+		\paragraph{estVide}
+		\begin{algorithme}
+		\fonction
+		{estVide}
+		{c : Cellule}
+		{\booleen}
+		{}
+		{
+			\retourner{c.couleur == NULL}
+		}
+		\end{algorithme}

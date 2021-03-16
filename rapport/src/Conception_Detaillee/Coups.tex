@@ -1,0 +1,68 @@
+%Conecption detaillée
+\subsection{Coups}
+	\subsubsection{Type}
+	
+	Coups = ListeChainee\textless Coup\textgreater . \\
+	Le TAD ListeChainee et ses fonctions sont ceux présents dans le cours.
+
+	\subsubsection{Fonction TAD}
+		\paragraph{creerCoups}
+			\begin{algorithme}
+				\small
+				\fonction
+				{creerCoups}
+				{}
+				{Coups}
+				{}
+				{
+					{\retourner{liste()}}
+				}
+			\end{algorithme}
+
+	\paragraph{obtenirCoup}
+		\begin{algorithme}
+			\small
+			\fonctionAvecPreconditions
+			{obtenirCoup}
+			{coups: Coups, position : \naturel}
+			{Coup}
+			{position \textgreater{} 0 et position $\leq$ longueur(coups)}
+			{
+				temp : Coups \\
+				i : \naturel
+			}
+			{
+				\affecter{i}{1}
+				\tantque{i<position et non estVide(temp)}
+				{
+					\affecter{temp}{obtenirListeSuivante(coups)}
+				}
+				\retourner{obtenirElement(temp)}
+			}
+		\end{algorithme}
+
+	\paragraph{ajouterCoup}
+		\begin{algorithme}
+			\small
+			\procedure
+			{ajouterCoup}
+			{\paramEntreeSortie{coups : Liste<coup>} \paramEntree{coup : coup} }
+			{}
+			{
+				\instruction{ajouter(coups, coup)}
+			}
+
+		\end{algorithme}
+		
+		\paragraph{estVide}
+			\begin{algorithme}
+				\small
+				\fonction
+				{Coups\textunderscore estVide}
+				{coups : Coups}
+				{\booleen}
+				{}
+				{
+					\retourner{estVide(coups)}
+				}
+			\end{algorithme}

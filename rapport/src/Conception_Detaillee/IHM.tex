@@ -1,0 +1,124 @@
+%CONCEPTION DETAILLEE
+
+\subsection{IHM}
+   \subsubsection{Type}
+      \begin{algorithme}
+        \begin{enregistrement}{IHM}
+          \champEnregistrement{afficherPlateau}{\typePointeur{\signatureprocedure{afficherPlateau}{\paramEntree{pos : Plateau}}}}
+          \champEnregistrement{afficherText}{\typePointeur{\signatureprocedure{afficherText}{\paramEntree{\chaine}}}}
+        \end{enregistrement}
+      \end{algorithme}
+
+   \subsubsection{Fonctions TAD}
+     \paragraph{Console}
+       \begin{algorithme}
+         \fonction
+         {console}
+         {}
+         {IHM}
+         {ihm : IHM}
+         {
+           \affecter{ihm.afficherPlateau}{\pointeur{affichagePlateauConsole}}
+           \affecter{ihm.afficherText}{\pointeur{affichageTexteConsole}}
+           \retourner{ihm}
+         }
+       \end{algorithme}
+
+      \paragraph{Tournoi}
+        \begin{algorithme}
+          \fonction
+          {tournoi}
+          {}
+          {IHM}
+          {ihm : IHM}
+          {
+            \affecter{ihm.afficherPlateau}{NIL}
+            \affecter{ihm.afficherText}{\pointeur{affichageTexteConsole}}
+            \retourner{ihm}
+          }
+        \end{algorithme}
+
+        \paragraph{AucunAffichage}
+          \begin{algorithme}
+            \fonction
+            {aucunAffichage}
+            {}
+            {IHM}
+            {ihm : IHM}
+            {
+              \affecter{ihm.afficherPlateau}{NIL}
+              \affecter{ihm.afficherText}{NIL}
+              \retourner{ihm}
+            }
+          \end{algorithme}
+          
+      \paragraph{AffichagePlateauConsole}
+        \begin{algorithme}
+          \fonction
+          {affichagePlateauConsole}
+          {plateau : Plateau}
+          {hauteau, largeur : \naturel , position : Position, cellule : Cellule, couleur : Couleur}
+          {ihm : IHM}
+          {
+            \affecter{hauteau}{obtenirHauteur(plateau)}
+            \affecter{largeur}{obtenirLargeur(plateau)}
+
+            \pour{i}{'a'}{'a'+largeur-1}{1}
+            {
+              \ecrire{i}
+            }
+            \ecrire{Retour chariot}
+            \pour{row}{0}{hauteur-1}{1}
+            {
+              \ecrire{row+1}
+              \pour{col}{0}{largeur-1}{1}
+              {
+                \affecter{position}{obtenirHauteur(plateau)}
+                \affecter{celulle}{obtenirCellule(plateau,position)}
+                \affecter{couleur}{obtenirHauteur(cellule)}
+                \ecrire{couleurVersChar(couleur)}
+              }
+              \ecrire{Retour chariot}
+            }
+          }
+        \end{algorithme}
+
+
+      \paragraph{AffichageTexteConsole}
+        \begin{algorithme}
+          \procedure
+          {affichageTexteConsole}
+          {\paramEntree{string : \chaine}}
+          {}
+          {
+            \ecrire{string}
+          }
+        \end{algorithme}
+        
+      \paragraph{afficherTexte}
+      	\begin{algorithme}
+      		\procedure
+      		{afficherTexte}
+      		{\paramEntree{ihm : IHM, texte : \chaine}}
+      		{}
+      		{
+      			\sialors{ihm.afficherText $\neq$ NIL}
+      			{
+      				\instruction{ihm.afficherText(texte)}
+      			}
+      		}
+      	\end{algorithme}
+      	
+      \paragraph{afficherPlateau}
+      	\begin{algorithme}
+      		\procedure
+      		{afficherPlateau}
+      		{\paramEntree{ihm : IHM, plateau : Plateau}}
+      		{}
+      		{
+      			\sialors{ihm.afficherPlateau $\neq$ NIL}
+      			{
+      				\instruction{ihm.afficherPlateau(plateau)}
+      			}
+      		}
+      	\end{algorithme}

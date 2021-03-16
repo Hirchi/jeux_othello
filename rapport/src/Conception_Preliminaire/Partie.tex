@@ -1,0 +1,68 @@
+\subsection{Partie}
+
+\begin{algorithme}
+  \signatureProcedure
+  {creerPartieClassique}
+  {\paramEntreeSortie{partie : Partie} \paramEntree{joueurNoir, joueurBlanc : Joueur}}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureProcedure
+  {creerPartieTournoi}
+  {\paramEntreeSortie{partie : Partie} \paramEntree{joueurNoir, joueurBlanc : Joueur, couleurProgramme : Couleur}}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonction{estTournoi}
+    {partie : Partie}
+    {\booleen}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonction{obtenirNombreJoueurs}
+    {partie : Partie}
+    {\naturel}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonction{obtenirJoueurs}
+    {partie : Partie}
+    {\tableauUneDimension{}{de}{Joueur}}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonction{obtenirPlateau}
+    {partie : Partie}
+    {Plateau}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonctionAvecPreconditions{obtenirCouleurProgramme}
+    {partie : Partie}
+    {Couleur}
+    {estTournoi(partie)}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonction{peutJouer}
+    {partie : Partie, joueur : Joueur}
+    {\booleen}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureFonction{estFinie}
+    {partie : Partie}
+    {\booleen}
+\end{algorithme}
+
+\begin{algorithme}
+  \signatureprocedure
+  {obtenirGagnantOuNul}
+  {\paramEntree{partie : Partie} \paramSortie{estNulle : \booleen}}
+\end{algorithme}
+
+\begin{algorithme}
+	\signatureprocedure
+	{lancerPartie}
+	{\paramEntreeSortie{partie: Partie} \paramEntree{ihm : IHM}}
+\end{algorithme}

@@ -1,0 +1,42 @@
+%ConceptionPreliminaire
+
+\subsection{Joueur}
+  \begin{algorithme}
+    \signaturefonction{creerJoueur}{strat : Stratégie, couleur : Couleur}{Joueur}
+  \end{algorithme}
+  
+    \begin{algorithme}
+    \signaturefonction{creerJoueurNiveau}{strat : Stratégie, couleur : Couleur, niveau : \naturel}{Joueur}
+  \end{algorithme}
+
+  \begin{algorithme}
+    \signaturefonction{obtenirStratégie}{joueur : Joueur}{Stratégie}
+  \end{algorithme}
+
+  \begin{algorithme}
+    \signaturefonction{obtenirCouleur}{joueur : Joueur}{Couleur}
+  \end{algorithme}
+  
+  \begin{algorithme}
+  	\signatureprocedure{assignerNom}{\paramEntreeSortie{joueur : Joueur)}}
+  \end{algorithme}
+  
+  \begin{algorithme}
+  	\signaturefonction{obtenirNom}{joueur : Joueur}{\chaine}
+  \end{algorithme}
+  
+  \begin{algorithme}
+  	\signaturefonction{obtenirCoup}{p : Plateau, joueur : Joueur}{Coup}
+  \end{algorithme}
+  
+  \begin{algorithme}
+  	\signaturefonction{obtenirCoupHumain}{p : Plateau, joueur : Joueur}{Coup}
+  \end{algorithme}
+  
+  \begin{algorithme}
+  	\signaturefonction{obtenirCoupMinMax}{p : Plateau, joueur : Joueur, niveau : \naturel}{Coup}
+  \end{algorithme}
+  
+  \begin{algorithme}
+  	\signaturefonction{obtenirCoupAlphaBeta}{p : Plateau, joueur : Joueur, niveau : \naturel}{Coup}
+  \end{algorithme}

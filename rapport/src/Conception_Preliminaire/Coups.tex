@@ -1,0 +1,29 @@
+% Conception Preliminaire
+
+\subsection{Coups}
+
+\begin{algorithme}
+	\signaturefonction{creerCoups}{}{Coups}
+\end{algorithme}
+
+\begin{algorithme}
+	\signatureFonctionAvecPreconditions{obtenirCoup}{coups : Coups, position : Naturel}{Coup}{obtenirCoup(coups, position)}{position \textgreater{} 0 et position $\leq$ longueur(coups)}
+\end{algorithme}
+
+\begin{algorithme}
+	\signatureprocedure{ajouterCoup}
+	{
+		\paramEntreeSortie{coups:Coups}
+		\paramEntree{coup:coup}
+	}
+\end{algorithme}
+
+\begin{algorithme}
+	\signaturefonction{estVide}{coups : Coups}{\booleen}
+\end{algorithme}
+
+\begin{algorithme}
+	\signaturefonction{longueur}{coups : Coups}{\naturel}
+\end{algorithme}
+
+

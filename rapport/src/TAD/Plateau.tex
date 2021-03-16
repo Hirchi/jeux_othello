@@ -1,0 +1,107 @@
+%TAD
+\subsection{Plateau}
+  \begin{tad}
+    \tadNom{Plateau}
+    
+    \tadParametres{}
+    \tadDependances{\booleen , Couleur, Cellule, \naturel, Joueur, Direction, Coup }
+
+    \begin{tadOperations}{Plateau}
+      \tadOperation{creerPlateau}
+        {\tadDeuxParams{\naturel}{\naturel}}
+        {\tadUnParam{Plateau}}
+
+      \tadOperation{initialisePionDebut}
+        {\tadUnParam{Plateau}}
+        {\tadUnParam{Plateau}}
+
+      \tadOperation{obtenirCellules}
+        {
+          \tadUnParam{Plateau}
+        }
+        {
+          \tadUnParam{
+            \tableauUneDimension{64}{de}{Cellule}
+          }
+        }
+
+      \tadOperation{obtenirCellule}
+        {
+          \tadDeuxParams{Plateau}{Position}
+        }
+        {\tadUnParam{Cellule}}
+
+      \tadOperation{estRempli}
+        {\tadUnParam{Plateau}}
+        {\tadUnParam{\booleen}}
+
+      \tadOperation{jouerCoup}
+        {\tadDeuxParams{Plateau}{Coup}}
+        {\tadUnParam{Plateau}}
+
+      \tadOperation{estUnCoupPossible}
+        {\tadDeuxParams{Coup}{Plateau}}
+        {\tadUnParam{\booleen}}
+
+      \tadOperation{nombrePion}
+        {\tadDeuxParams{Plateau}{Couleur}}
+        {\tadUnParam{\naturel}}
+
+      \tadOperation{obtenirLargeur}
+        {\tadUnParam{Plateau}}
+        {\tadUnParam{\naturel}}
+
+      \tadOperation{obtenirHauteur}
+        {\tadUnParam{Plateau}}
+        {\tadUnParam{\naturel}}
+
+      \tadOperation{obtenirCouleur}
+        {\tadDeuxParams{Plateau}{Position}}
+        {\tadUnParam{Couleur}}
+
+      \tadOperation{estDansLePlateau}
+        {\tadDeuxParams{Plateau}{Position}}
+        {\tadUnParam{\booleen}}
+        
+      \tadOperation{listeCoupsPossibles}
+        {\tadDeuxParams{Plateau}{Couleur}}
+        {\tadUnParam{Coups}}   
+    \end{tadOperations}
+
+
+
+	\begin{tadSemantique}{Plateau}
+	  \tadSemantique{creerPlateau}{creer un plateau de dimension le premier paramètre en largeur et le deuxième en hauteur}
+	  \tadSemantique{initialiserPionDebut}{Positionne les 4 pions qui sont la au début de la partie au milieu de la grille}
+	  \tadSemantique{obtenirCellules}{Renvoie un tableau avec toutes les cellules du plateau}
+	   \tadSemantique{obtenirCellule}{Renvoie une cellule du plateau a une position donnée}
+	   \tadSemantique{estRempli}{Test si toutes les cellules du tableau sont remplies}
+	   \tadSemantique{jouerCoup}{Permet de mettre à jour le plateau une fois que le joueur à jouer}
+	   \tadSemantique{estUnCoupPossible}{Test si un coup est possible au vu de l'etat du plateau}
+	   \tadSemantique{nombresPion}{Compte le nombre de pion de chaque couleur}	  
+	  \tadSemantique{obtenirHauteur}{Renvoie la hauteur du plateau}
+	  \tadSemantique{obtenirLargeur}{Renvoie la largeur du plateau}
+	  \tadSemantique{obtenirCouleur}{Renvoie la Couleur d'une position donnée du plateau}
+	  \tadSemantique{estDansLePlateau}{Test si une position est dans le plateau}
+	  \tadSemantique{listeCoupsPossibles}{Renvoie la liste des coups possibles pour un joueur en foncion de sa couleur}
+	  
+	\end{tadSemantique}
+	
+
+    \begin{tadAxiomes}
+      \tadAxiome{
+        estDansLePlateau(creerPlateau(x,y),Position(x1,y1)) = Vrai si 1 $\le$ x1 $\le$ x et 1 $\le$ y1 $\le$ y sinon Faux
+      }
+      \tadAxiome{estBlanc(obtenirCouleur(obtenirPosition(initialisePionDebut(creerPlateau(8,8)), position(4,4)) ) ) == Vrai}
+      \tadAxiome{estNoir( obtenirCouleur( obtenirPosition(initialisePionDebut(creerPlateau(8,8)), position(5,4)) ) ) == Vrai}
+      \tadAxiome{estBlanc( obtenirCouleur( obtenirPosition(initialisePionDebut(creerPlateau(8,8)), position(5,5)) ) ) == Vrai}
+      \tadAxiome{estNoir(obtenirCouleur(obtenirPosition(initialisePionDebut(creerPlateau(8,8)), position(4,5)) ) == Vrai}
+      \tadAxiome{estRempli(Plateaux(8,8)) = Faux}
+
+    \end{tadAxiomes} 
+
+    \begin{tadPreconditions}{}
+      \tadPrecondition{obtenirCellule(plateau,position(x,y))}{1 $\le$ x $\le$ obtenirLargeur(plateau)}
+      \tadPrecondition{obtenirCellule(plateau,position(x,y))}{1 $\le$ y $\le$ obtenirHauteur(plateau)}
+    \end{tadPreconditions}
+  \end{tad}

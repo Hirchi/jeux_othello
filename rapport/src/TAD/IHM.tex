@@ -1,0 +1,22 @@
+%TAD
+
+\begin{tad}
+  \tadNom{IHM}
+  \tadParametres{}
+  \tadDependances{}
+
+  \begin{tadOperations}{Dictionnaire}
+    \tadOperation{console}{}{\tadUnParam{IHM}}
+    \tadOperation{tournoi}{}{\tadUnParam{IHM}}
+    \tadOperation{aucunAffichage}{}{\tadUnParam{IHM}}
+  \end{tadOperations}
+
+  \begin{tadSemantiques}{Dictionnaire}
+    \tadSemantique{console}{Crée une IHM console}
+    \tadSemantique{tournoi}{Crée une IHM dédiée au mode tournoi (affichage texte uniquement)}
+    \tadSemantique{aucunAffichage}{Crée une IHM sans affichage}
+  \end{tadSemantiques}
+
+  \begin{tadAxiomes}
+  \end{tadAxiomes}
+\end{tad}

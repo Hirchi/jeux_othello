@@ -1,0 +1,38 @@
+\subsection{Coups}
+\begin{tad}
+\tadNom{Coups}
+\tadParametres{}
+\tadDependances{Liste\textless{}Coup\textgreater{}, Coup, \naturel}
+
+
+\begin{tadOperations}{Coups}
+  \tadOperation{creerCoups}{}{Coups}
+  \tadOperation{ajouterCoup}{\tadDeuxParams{Coups}{Coup}}{\tadUnParam{Coups}}
+  \tadOperation{obtenirCoup}{\tadDeuxParams{Coups}{\naturel}}{\tadUnParam{Coup}}
+  \tadOperation{estVide}{\tadUnParam{Coups}}{\tadUnParam{\booleen}}
+  \tadOperation{longueur}{\tadUnParam{Coups}}{\tadUnParam{\naturel}}
+\end{tadOperations}
+
+\begin{tadSemantiques}{Coups}
+	\tadSemantique{creerCoups}{Crée une liste vide de coups}
+	\tadSemantique{ajouterCoup}{Ajoute un coup dans une liste de coups}
+	\tadSemantique{obtenirCoup}{Obtient un coup à une certaine position dans la liste de coup}
+	\tadSemantique{estVide}{Retourne un booleen indiquant si la liste est vide ou non (en pratique raccourci pour longueur(coups)==0)}
+	\tadSemantique{longueur}{Retourne la longueur (nombre de coups) de la liste}
+\end{tadSemantiques}
+
+\begin{tadAxiomes}
+	\tadAxiome{longueur(coups) = 0 $\iff$ estVide(coups)}
+	\tadAxiome{estVide(creerCoups())}
+	\tadAxiome{non estVide(ajouterCoup(creerCoups(), coup))}
+	\tadAxiome{longueur(ajouterCoup(creerCoups(), coup)) = 1}
+	\tadAxiome{obtenirCoup(ajouterCoup(creerCous(), coup)) = coup}
+\end{tadAxiomes}
+
+\begin{tadPreconditions}{}
+	\tadPrecondition{obtenirCoup(coups, position)}{position \textgreater{} 0 et position $\leq$ longueur(coups)}
+\end{tadPreconditions}
+
+
+
+\end{tad}

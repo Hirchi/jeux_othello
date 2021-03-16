@@ -1,0 +1,14 @@
+\subsubsection{obtenirCoup}
+\begin{algorithme}
+\fonction
+{obtenirCoupHumain}
+{joueur : Joueur, pl : Plateau}
+{Coup}
+{coupAJouer : Coup}
+{\sialorssinon{Joueur.obtenirStratégie $=$ humain}
+	{\affecter{coupAJour}{obtenirCoupHumain(joueur,pl)}}
+	{\affecter{coupAJour}{obtenirIA(joueur,pl)}}
+
+\retourner{coupAJour}
+}
+\end{algorithme}

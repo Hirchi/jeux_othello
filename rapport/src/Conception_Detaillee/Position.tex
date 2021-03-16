@@ -1,0 +1,143 @@
+%CONCEPTION DETAILLEE
+
+\subsection{Position}
+
+	\subsubsection{Type}
+		\begin{algorithme}
+			\begin{enregistrement}{Position}
+				\champEnregistrement{abscisse}{\naturel}
+				\champEnregistrement{ordonnée}{\naturel}
+			\end{enregistrement}
+		\end{algorithme}
+
+	\subsubsection{Focntions TAD}
+		\paragraph{creerPosition}
+			\begin{algorithme}
+				\fonction
+				{creerPosition}
+				{x,y : \naturel}
+				{Position}
+				{pos : Position}
+				{
+					\affecter{pos.abscisse}{x}
+					\affecter{pos.ordonnée}{y}
+					\retourner{pos}
+				}
+			\end{algorithme}
+
+		\paragraph{abscisse}
+			\begin{algorithme}
+				\fonction
+				{abscisse}
+				{pos : Position}
+				{\naturel}
+				{}
+				{
+					\retourner{pos.abscisse}
+				}
+			\end{algorithme}
+
+		\paragraph{ordonnee}
+			\begin{algorithme}
+				\fonction
+				{ordonnée}
+				{pos : Position}
+				{\naturel}
+				{}
+				{
+					\retourner{pos.ordonnée}
+				}
+			\end{algorithme}
+
+		\paragraph{egales}
+			\begin{algorithme}
+				\fonction
+				{egales}
+				{pos1, pos2 : Position}
+				{\naturel}
+				{}
+				{
+					\retourner{abscisse(pos1) = abscisse(pos2) ET ordonnee(pos1) = ordonnee(pos2)}
+				}
+			\end{algorithme}
+
+		\paragraph{positionEnChaine}
+			\begin{algorithme}
+				\fonction
+				{positionEnChaine}
+				{pos : Position}
+				{\chaine}
+				{resultat : \chaine}
+				{
+					\affecter{resultat}{'a'+ abscisse(pos) -1}
+					\affecter{resultat}{Concatène(resultat,'1'+ordonne(pos) -1)}
+					\retourner{resultat}
+				}
+			\end{algorithme}
+
+		\paragraph{chaineEnPosition}
+			\begin{algorithme}
+				\fonction
+				{chaineEnPosition}
+				{string : \chaine}
+				{Position}
+				{abscisse,ordonnee : \naturel}
+				{
+					\affecter{abscisse}{(\naturel) iemeCaractere(string,1) - (\naturel) 'a' + 1}
+					\affecter{ordonnee}{caractereEnNaturel(iemeCaractere(string,2))}
+					\retourner{creerPosition(abscisse,ordonnee)}
+				}
+			\end{algorithme}
+
+		\paragraph{positionAdjacente}
+			\begin{algorithme}
+				\fonction
+				{positionAdjacente}
+				{position : Position, direction Direction}
+				{Position}
+				{abscisse,ordonnee : \naturel}
+				{
+					\affecter{abscisse}{abscisse(position)}
+					\affecter{ordonnee}{ordonnee(position)}
+					\cas{direction}
+					{
+						\casclausegenerale{NORD}
+						{
+							\affecter{ordonnee}{ordonnee-1}
+						}
+						\casclausegenerale{NORDEST}
+						{
+							\affecter{abscisse}{abscisse+1}
+							\affecter{ordonnee}{ordonnee-1}
+						}
+						\casclausegenerale{EST}
+						{
+							\affecter{abscisse}{abscisse+1}
+						}
+						\casclausegenerale{SUDEST}
+						{
+							\affecter{abscisse}{abscisse+1}
+							\affecter{ordonnee}{ordonnee+1}
+						}
+						\casclausegenerale{SUD}
+						{
+							\affecter{ordonnee}{ordonnee+1}
+						}
+						\casclausegenerale{SUDOUEST}
+						{
+							\affecter{abscisse}{abscisse-1}
+							\affecter{ordonnee}{ordonnee+1}
+						}
+						\casclausegenerale{OUEST}
+						{
+							\affecter{abscisse}{abscisse-1}
+						}
+						\casclausegenerale{NORDOUEST}
+						{
+							\affecter{ordonnee}{ordonnee-1}
+							\affecter{abscisse}{abscisse-1}
+						}
+					}
+					\retourner{creerPosition(abscisse,ordonnee)}
+				}
+			\end{algorithme}

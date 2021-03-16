@@ -1,0 +1,35 @@
+%TAD
+\subsection{Cellule}
+  \begin{tad}
+    \tadNom{Cellule}
+    \tadDependances{\booleen ,Couleur, Position, \naturel }
+
+    \begin{tadOperations}{Cellule}
+      \tadOperation{creerCellule}{\tadUnParam{Position}}{\tadUnParam{Cellule}}
+      \tadOperation{obtenirPosition}{\tadUnParam{Cellule}}{\tadUnParam{Position}}
+      \tadOperation{estVide}{\tadUnParam{Cellule}}{\tadUnParam{\booleen}}
+      \tadOperation{obtenirCouleur}{\tadUnParam{Cellule}}{\tadUnParam{Couleur}}
+      \tadOperation{placerCouleur}{\tadDeuxParams{Cellule}{Couleur}}{\tadUnParam{Cellule}}
+    \end{tadOperations}
+
+	\begin{tadSemantiques}{Cellule}
+		\tadSemantique{creerCellule}{Crée une cellule à la position indiquée}
+		\tadSemantique{obtenirPosition}{Obtient la position d'une cellule}
+		\tadSemantique{estVide}{Retourne un booléen indiquant si la cellule est vide}
+		\tadSemantique{obtenirCouleur}{Obtient la couleur contenue dans la cellule}
+		\tadSemantique{placerCouleur}{Place la couleur indiquée dans la cellule (remplacant celle existante}
+	\end{tadSemantiques}
+
+    \begin{tadAxiomes}
+      \tadAxiome{obtenirPosition(cellule(position(x,y))) = x,y}
+      \tadAxiome{estVide(cellule(position(x,y)))}
+      \tadAxiome{nonestVide(placerCouleur(cellule(position(x,y)), blanc()))}
+      \tadAxiome{nonestVide(placerCouleur(cellule(position(x,y)), noir()))}
+      \tadAxiome{obtenirCouleur(placerCouleur(cellule, couleur)) = couleur}
+    \end{tadAxiomes}
+
+
+    \begin{tadPreconditions}{}
+    \end{tadPreconditions}
+
+  \end{tad}

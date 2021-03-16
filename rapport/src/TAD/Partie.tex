@@ -1,0 +1,77 @@
+%TAD
+\subsection{Partie}
+  \begin{tad}
+    \tadNom{Partie}
+    \tadParametres{}
+    \tadDependances{\booleen , Couleur, \naturel, Joueur, Plateau, Coup}
+
+    \begin{tadOperations}{Partie}
+      \tadOperation{creerPartieClassique}
+        {\tadDeuxParams{Joueur}{Joueur}}
+        {\tadUnParam{Partie}}
+        
+      \tadOperation{creerPartieTournoi}
+        {\tadTroisParams{Joueur}{Joueur}{Couleur}}
+        {\tadUnParam{Partie}}
+        
+      \tadOperation{estTournoi}
+        {\tadUnParam{Partie}}
+        {\tadUnParam{\booleen}}
+        
+      \tadOperation{obtenirNombreJoueurs}
+        {\tadUnParam{Partie}}
+        {\tadUnParam{Naturel}}
+      
+      \tadOperation{obtenirJoueurs}
+        {\tadUnParam{Partie}}
+        {\tadUnParam{\tableauUneDimension{}{de}{Joueur}}}
+      
+      \tadOperation{obtenirPlateau}
+        {\tadUnParam{Partie}}
+        {\tadUnParam{Plateau}}
+        
+      \tadOperation{obtenirCouleurProgramme}
+        {\tadUnParam{Partie}}
+        {\tadUnParam{Couleur}}
+        
+      \tadOperation{peutJouer}
+        {\tadDeuxParams{Partie}{Joueur}}
+        {\tadUnParam{\booleen}}
+               
+      \tadOperation{estFinie}
+        {\tadUnParam{Partie}}
+        {\tadUnParam{\booleen}}
+        
+      \tadOperation{obtenirGagnantOuNul}
+        {\tadUnParam{Partie}}
+        {\tadDeuxParams{\booleen}{Joueur}}
+        
+        
+	    
+      
+    \end{tadOperations}
+    
+    \begin{tadSemantiques}{Partie}
+    	\tadSemantique{creerPartieClassique}{Crée une partie Joueur contre IA}
+    	\tadSemantique{creerPartieTournoi}{Crée une partie en mode tournoi}
+    	\tadSemantique{estTournoi}{Retourne un booléen en fonction de si la partie est en mode tournoi ou non}
+    	\tadSemantique{obtenirNombreJoueurs}{Retourne le nombre de joueurs de la partie (dans le cadre de ce projet, 2)}
+    	\tadSemantique{obtenirJoueurs}{Retourne un tableau (de taille du nombre de joueurs) contenant les joueurs de la partie}
+    	\tadSemantique{obtenirPlateau}{Retourne le plateau de la partie}
+    	\tadSemantique{obtenirCouleurProgramme}{Retourne la couleur du programme si la partie est en mode tournoi}
+    	\tadSemantique{peutJouer}{Retourne un booléen indiquant si le joueur donné peut jouer dans l'état actuel de la partie}
+    	\tadSemantique{estFinie}{Retourne un booléen indiquant si la partie est terminée ou non}
+    	\tadSemantique{obtenirGagnantOuNul}{Renvoie un booléen valant vrai et une valeur quelconque si la partie est nulle, sinon renvoie faux et le joueur gagnant}
+    \end{tadSemantiques}
+
+    \begin{tadAxiomes}
+      \tadAxiome{estTournoi(creerPartieTournoi(j1, j2, c)) == Vrai}
+      \tadAxiome{estTournoi(creerPartieClassique(j1, j2, c)) == Faux}
+      \tadAxiome{obtenirCouleurProgramme(creerPartieTournoi(j1, j2, c)) == c} 
+
+    \end{tadAxiomes}
+
+    \begin{tadPreconditions}{}
+      \tadPrecondition{obtenirCouleurProgramme(partie)}{estTournoi(partie)}
+    \end{tadPreconditions}
+  \end{tad}

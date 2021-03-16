@@ -1,0 +1,134 @@
+\subsection{Couleur}
+	\subsubsection{Type}
+		\begin{algorithme}
+			\type{Couleur}{blanc,noir}
+		\end{algorithme}
+
+	\subsubsection{Fonctions TAD}
+		\paragraph{blanc}
+			\begin{algorithme}
+				\fonction {blanc}{}{Couleur}
+				{}
+				{
+					{\retourner{blanc}}
+				}
+			\end{algorithme}
+
+		\paragraph{noir}
+			\begin{algorithme}
+				\fonction{noir}{}{Couleur}
+				{}
+				{
+					{\retourner{noir}}
+				}
+			\end{algorithme}
+
+		\paragraph{sansCouleur}
+			\begin{algorithme}
+				\fonction{sansCouleur}{}{Couleur}
+				{}
+				{
+					{\retourner{sansCouleur}}
+				}
+			\end{algorithme}
+
+		\paragraph{complément}
+			\begin{algorithme}
+				\fonction{complément}{couleur : Couleur}{Couleur}
+				{}
+				{
+					\sialorssinon{couleur = blanc}
+						{
+							\retourner{noir}
+						}
+						{
+							\retourner{blanc}
+						}
+				}
+			\end{algorithme}
+
+
+		\paragraph{estBlanc}
+			\begin{algorithme}
+				\fonction{estBlanc}{couleur : Couleur}{\booleen}
+				{}
+				{
+					\sialorssinon{couleur = blanc}
+						{
+							\retourner{Vrai}
+						}
+						{
+							\retourner{Faux}
+						}
+				}
+			\end{algorithme}
+
+		\paragraph{estNoir}
+			\begin{algorithme}
+				\fonction {estNoir}{couleur : Couleur}{\booleen}
+				{}
+				{
+					\sialorssinon{couleur = noir}
+						{
+							\retourner{Vrai}
+						}
+						{
+							\retourner{Faux}
+						}
+				}
+			\end{algorithme}
+
+		\paragraph{estSansCouleur}
+			\begin{algorithme}
+				\fonction {estSansCouleur}{couleur : Couleur}{\booleen}
+				{}
+				{
+					\sialorssinon{couleur = sansCouleur}
+						{
+							\retourner{Vrai}
+						}
+						{
+							\retourner{Faux}
+						}
+				}
+			\end{algorithme}
+
+		\paragraph{couleurVersChar}
+			\begin{algorithme}
+				\fonction {couleurVersChar}{couleur : Couleur}{\caractere}
+				{}
+				{
+					\cas{couleur}
+					{
+							\casclausegenerale{Blanc}{
+								\retourner{'B'}
+							}
+							\casclausegenerale{Noir}{
+								\retourner{'N'}
+							}
+							\casclauseautre{
+								\retourner{' '}
+							}
+					}
+				}
+			\end{algorithme}
+
+		\paragraph{charVersCouleur}
+			\begin{algorithme}
+				\fonction {couleurVersChar}{charactere : \caractere}{Couleur}
+				{}
+				{
+					\cas{charactere}
+					{
+							\casclausegenerale{'B'}{
+								\retourner{Blanc}
+							}
+							\casclausegenerale{'N'}{
+								\retourner{Noir}
+							}
+							\casclauseautre{
+								\retourner{SansCouleur}
+							}
+					}
+				}
+			\end{algorithme}

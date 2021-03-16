@@ -1,0 +1,25 @@
+% TAD
+
+\subsection{Coup}
+\begin{tad}
+  \tadNom{Coup}
+  \tadParametres{}
+  \tadDependances{Couleur, Position, Plateau}
+
+  \begin{tadOperations}{obtenirPosition}
+    \tadOperation{creerCoup}{\tadDeuxParams{Position}{Couleur}}{\tadUnParam{Coup}}
+    \tadOperation{obtenirCouleur}{\tadUnParam{Coup}}{\tadUnParam{Couleur}}
+    \tadOperation{obtenirPosition}{\tadUnParam{Coup}}{\tadUnParam{Position}}
+  \end{tadOperations}
+
+  \begin{tadSemantiques}{obtenirPosition}
+    \tadSemantique{creerCoup}{Permet de créer un coup}
+    \tadSemantique{obtenirCouleur}{Obtient la couleur du pion placé lors du coup indiqué}
+    \tadSemantique{obtenirPosition}{Obtient la position du coup}
+  \end{tadSemantiques}
+
+  \begin{tadAxiomes}
+    \tadAxiome{obtenirCouleur(creerCoup(pos,couleur)=couleur}
+    \tadAxiome{obtenirPosition(creerCoup(pos,couleur)=pos}
+  \end{tadAxiomes}
+\end{tad}

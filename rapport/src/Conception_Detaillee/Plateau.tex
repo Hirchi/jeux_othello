@@ -1,0 +1,498 @@
+\subsection{Plateau}
+\subsubsection{Type}
+\begin{algorithme}
+			\begin{enregistrement}{Plateau}
+				\champEnregistrement{largeur}{\naturel}
+				\champEnregistrement{hauteur}{\naturel}
+\champEnregistrement{tableauCellule}{\tableauDeuxDimensions{1..MAX}{1..MAX}{de}{Cellule}}
+			\end{enregistrement}
+		\end{algorithme}
+
+ 
+\subsubsection{Fonctions TAD}
+\paragraph{creerPlateau}
+\begin{algorithme}
+\fonction
+{creerPlateau}
+{largeur, hauteur : \naturel}
+{Plateau}
+{
+i, j : \naturel \newline
+posTmp : Position \newline
+celluleTmp : Cellule \newline
+tableauTmp : \tableauDeuxDimensions{1..MAX}{1..MAX}{de}{Cellule} \newline
+p : Plateau
+}
+{
+\affecter{p.largeur}{largeur}
+\affecter{p.hauteur}{hauteur}
+\pour{i}{1}{hauteur}{}
+	{
+		\pour{j}{1}{largeur}{}
+		{
+			\affecter{posTmp}{creerPosition(i, j)}
+			\affecter{celluleTmp}{creerCellule(i, j)}
+			\affecter{p.tableauCellule}{cellule(i, j)}
+		}
+	}
+\retourner{p}
+}
+\end{algorithme}
+
+
+
+\paragraph{initialiserPionDebut}
+\begin{algorithme}
+				\small
+				\procedure
+				{assignerNom}
+				{\paramEntreeSortie{joueur : Joueur}}
+				{}
+				{
+\instruction{placerCouleur(obtenirCellule(p, position(4, 4)), blanc())}
+	\instruction{placerCouleur(obtenirCellule(p, position(5, 4)), noir())}
+	\instruction{placerCouleur(obtenirCellule(p, position(5, 5)), blanc())}
+	\instruction{placerCouleur(obtenirCellule(p, position(4, 5)), noir())}
+				}
+\end{algorithme}
+
+
+\paragraph{obtenirCellules}
+\begin{algorithme}
+\fonction
+{obtenirCellules}
+{p : Plateau}
+{\tableauUneDimension{64}{de}{Cellule}}
+{
+i, j : \naturel \newline
+res : \tableauUneDimension{64}{de}{Cellule}
+}
+{
+\pour{i}{1}{obtenirHauteur(p)}{}
+	{
+		\pour{j}{1}{obtenirLargeur(p)}{}
+		{
+			\affecter{res[i]}{obtenirCellule(p,creerPosition(i,j)}
+		}
+	}
+
+	\retourner{res}
+}
+\end{algorithme}
+
+
+\paragraph{obtenirCellule}
+\begin{algorithme}
+\fonction
+{obtenirCellule}
+{p : Plateau \newline
+pos : Position}
+{Cellule}
+{
+i, j : \naturel
+}
+{
+	\retourner{p.tableauCellule(abscisse(pos),
+	ordonnee(pos))}
+}
+\end{algorithme}
+
+
+\paragraph{estRempli}
+\begin{algorithme}
+\fonction
+{estRempli}
+{p : Plateau}
+{\booleen}
+{
+i, j : \naturel \newline
+estRempli  : \booleen
+}
+{
+	\affecter{estRempli}{Vrai}
+	\affecter{i}{1}
+	\affecter{j}{1}
+	\tantque{estRempli et (i $<=$ obtenirHauteur(p) ou j $<=$ obtenirLargeur(p))}
+		{
+		\affecter{celluleTmp}{obtenirCellule(plateau,creerPosition(i,j))}
+		\sialors{estVide(celluleTmp)}
+			{
+			\affecter{estRempli}{Faux}
+			}
+		\sialorssinon{j $<=$ obtenirLargeur(p)}
+			{
+			 \affecter{j}{j+1}
+			}
+			{
+			 \affecter{i}{i+1}
+			}
+		}
+		
+	\retourner{estRempli}
+}
+\end{algorithme}
+
+
+\paragraph{jouerCoup}
+\begin{algorithme}
+\procedure
+{jouerCoup}
+{\paramEntreeSortie{p : Plateau} \paramEntree{c : Coup}}
+{x,y,i : \naturel \newline
+cellulesRetournees : Cellule \newline
+celluleActuelle : Cellule}
+{
+	\affecter{x}{abscisse(obtenirPosition(c))}
+	\affecter{y}{ordonnee(obtenirPosition(c))}
+	\instruction{placerPion(obtenirCellule(position(x,y)), obtenirPion(c))}
+	\affecter{cellulesRetournees}{obtenirCellulesRetournees(p, position(x,y))}
+	\pour{i}{1}{longueur(cellulesRetournees)}{}
+	{
+		\affecter{celluleActuelle}{obtenirCellule(cellulesRetournees, i)}
+		\instruction{placerCouleur(celluleActuelle, complement(obtenirCouleur(celluleActuelle))}
+	}
+} 
+
+\end{algorithme}
+
+
+
+\paragraph{estUnCoupPossible}
+\begin{algorithme}
+\fonction
+{estUnCoupPossible}
+{p : Plateau, c : Coup}
+{\booleen}
+{pos, posTmp : Position \newline
+ couleur,complement : Couleur \newline
+ directions : liste$<Direction>$ \newline
+ res : \booleen \newline
+ i : \naturel
+}
+{
+	\affecter{pos}{obtenirPosition(c)}
+	\affecter{couleur}{obtenirCouleur(c)}
+	\affecter{complement}{complement(couleur)}
+	\sialors{obtenirCouleur(p,pos) $<>$ sansCouleur()}
+	{
+		\retourner{Faux}
+	}
+	\affecter{res}{Faux}
+	\affecter{i}{0}
+	\affecter{directions}{${NORD,NORDEST,EST,SUDEST,SUD,SUDOUEST,
+	OUEST,NORDOUEST}$}
+	\tantque{res et i $<$ 8}
+	{
+		\affecter{posTmp}{positionAdjacente(pos,directions[i]}
+		\sialors{estDanslePlateau(p,posTmp)}
+		{
+			\sialors{obtenirCouleur(p,posTmp) = complement}
+			{
+				\affecter{res}{estUnCoupPossibleR(p,posTmp,Direction[i],couleur)}
+			}
+		}
+	}
+	\retourner{res}
+}
+\end{algorithme}
+
+\paragraph{estUnCoupPossibleR}
+\begin{algorithme}
+\fonction
+{estUnCoupPossibleR}
+{p : Plateau, direc : Direction,pos : Position, coulJoueur : Couleur}
+{\booleen}
+{posAdj : Position \newline
+ couleurAdj : Couleur \newline
+}
+{
+	\affecter{posAdj}{positionAdjacente(pos,direct)}
+	\sialorssinon{estDanslePlateau(p,posAdj)}
+	{
+		\affecter{couleurAdj}{obtenirCouleur(p,posAdj)}
+		\sialorssinon{couleurAdj = coulJoueur}
+		{
+			\retourner{Vrai}
+		}
+		{
+			\sialorssinon{estVide
+			(obtenirCellule(p,posAdj))}
+			{
+				\retourner{Faux}
+			}
+			{
+				\retourner{estUnCoupPossibleR(p,posAdj,direct,coulJoueur)}
+			}
+		}
+	}
+	{
+		\retourner{Faux}
+	}
+
+}
+\end{algorithme}
+
+
+
+
+
+\paragraph{nombrePions}
+\begin{algorithme}
+\fonction
+{nombrePions}
+{p : Plateau, joueurRef : Joueur}
+{\naturel}
+{i,j, nbPions : \naturel \newline
+ celluleActuelle : Cellule}
+{
+	\affecter{nbPions}{0}
+	\pour{i}{1}{p.hauteur}{}
+	{
+		\pour{j}{1}{p.largeur}{}
+		{
+			\affecter{celluleActuelle}{obtenirCellule(p, position(i,j)}
+			\sialors{non estVide(celluleActuelle) et obtenirCouleur(celluleActuelle) = obtenirCouleur(joueurRef)}
+			{
+				\affecter{nbPions}{nbPions + 1}
+			} 
+		}
+	}
+	\retourner{nbPions}
+}
+\end{algorithme}
+
+\paragraph{obtenirLargeur}
+\begin{algorithme}
+\fonction
+{obtenirLargeur}
+{p : Plateau}
+{\naturel}
+{
+}
+{
+	\retourner{p.largeur}
+}
+\end{algorithme}
+
+\paragraph{obtenirHauteur}
+\begin{algorithme}
+\fonction
+{obtenirHauteur}
+{p : Plateau}
+{\naturel}
+{
+}
+{
+	\retourner{p.hauteur}
+}
+\end{algorithme}
+
+
+\paragraph{detruirePlateau}
+\begin{algorithme}
+\procedure
+{detruirePlateau}
+{\paramEntreeSortie{p : Plateau}}
+{}
+{
+	\affecter{p}{creerPlateau(0,0)}
+} 
+
+\end{algorithme}
+
+
+\paragraph{obtenirCouleur}
+\begin{algorithme}
+\fonction
+{obtenirCouleur}
+{p : Plateau; pos : Position}
+{Couleur}
+{
+}
+{
+	\retourner{obtenirCouleur(obtenirPosition(p,pos))}
+}
+\end{algorithme}
+
+\paragraph{estDanslePlateau}
+\begin{algorithme}
+\fonction
+{estDanslePlateau}
+{p : Plateau; pos : Position}
+{\naturel}
+{
+}
+{
+	\affecter{abscisse}{abscisse(pos)}
+	\affecter{ordonnee}{ordonnee(pos)}
+	\affecter{hauteur}{obtenirHauteur(p)}
+	\affecter{largeur}{obtenirLargeur(p)}
+	\retourner{1 $<=$ abscisse $<=$ largeur et 1 $<=$ ordonnee $<=$ hauteur }
+}
+\end{algorithme}
+
+\paragraph{listeCoupPossible}
+\begin{algorithme}
+\fonction
+{listeCoupPossible}
+{p : Plateau; couleurRef : Couleur}
+{Coups}
+{res : Coups \newline
+ i , j : \naturel \newline
+ coupTmp : Coup
+}
+{
+	\affecter{res}{CoupCreerVide()}
+	\pour{i}{1}{obtenirHauteur(p)}{}
+	{
+		\pour{j}{1}{obtenirLargeur(p)}{}
+		{
+			\affecter{coupTmp}{creerCoup(creerPosition(i,j),couleurRef)}
+			\sialors{estUnCoupPossible(p,coupTmp)}
+			{
+				\instruction{ajouterCoup(res,coupTmp)}
+			} 
+		}
+	}
+	
+	\retourner{res}
+}
+\end{algorithme}
+
+\paragraph{plateauEnString}
+~\\
+On suppose disposer d'une fonction naturelEnChaine(n) qui retourne la représentation d'un naturel en chaine de caracteres. \\
+
+\begin{algorithme}
+\fonction
+{plateauEnString}
+{plateau : Plateau}
+{\chaine}
+{
+	hauteur, largeur, i, j: \naturel \\
+	couleur : Couleur \\
+	chaine : \chaine
+}
+{
+	\affecter{hauteur}{obtenirHauteur(plateau)}
+	\affecter{nbChiffresHauteur}{nbChiffres(hauteur)}
+	\affecter{largeur}{obtenirLargeur(plateau)}
+	\affecter{nbChiffresLargeur}{nbChiffres(largeur)}
+	\affecter{chaine}{""}
+	
+	\instruction{ecrire(chaine, naturelEnChaine(hauteur))}
+	\instruction{ecrire(chaine, ':')}
+	\instruction{ecrire(chaine, naturelEnChaine(largeur))}
+	
+	\pour{i}{1}{hauteur}{}
+	{
+		\pour{j}{1}{largeur}{}
+		{
+			\affecter{couleur}{obtenirCouleur(obtenirCellule(plateau, i, j)}
+			\instruction{ecrire(chaine, couleurVersChar(couleur)}
+		}	
+	}
+	\retourner{chaine}
+
+} 
+\end{algorithme}
+
+\paragraph{stringEnPlateau} ~\\
+On suppose disposer d'une fonction niemeCaractere(chaine, n) qui retourne le n-ieme caractere de la chaine indiquée. \\
+
+On suppose également disposer d'une fonction sousChaine(chaine, position) qui retourne le contenu de la chaîne indiquée à partir de la position indiquée jusqu'à la fin de la chaîne. \\
+
+\begin{algorithme}
+\fonction
+{stringEnPlateau}
+{string : \chaine}
+{Plateau}
+{
+	hauteur, largeur, nbChiffresHauteur, nbChiffresLargeur, i, j, finDimensions: \naturel \\
+	caractereActuel : Caractere \\
+	plateau : Plateau
+}
+{
+	\affecter{hauteur}{prochainNombreDansChaine(string)}
+	\affecter{nbChiffresHauteur}{nbChiffres(hauteur)}
+	\affecter{largeur}{prochainNombreDansChaine(sousChaine(string, nombreChiffresHauteur+1))}
+	\affecter{nbChiffresLargeur}{nbChiffres(largeur)}
+	
+	\affecter{finDimensions}{nbChiffresLargeur+nbChiffresHauteur+2}
+	\affecter{plateau}{creerPlateau(largeur, hauteur)}
+	\pour{i}{1}{hauteur}{}
+	{
+		\pour{j}{1}{largeur}{}
+		{
+			\affecter{caractereActuel}{niemeCaractere(chaine, finDimensions+(j-1)+(i-1)*largeur)}
+			\sialors{caractereActuel $\neq$ '.'}
+			{
+				\instruction{placerCouleur(obtenirCellule(plateau, creerPosition(j, i)), charVersCouleur(caractereActuel))} 
+			}
+		}
+	}
+	\retourner{plateau}
+	
+
+} 
+\end{algorithme}
+
+\subsubsection{Fonctions privées}
+
+\paragraph{nbChiffres}
+\begin{algorithme}
+\fonction
+{nbChiffres}
+{n : \naturel}
+{\naturel}
+{nombreChiffres : \naturel}
+{
+	\affecter{nombreChiffres}{0}
+	\tantque{n > 0}
+	{
+		\affecter{n}{n div 10}
+		\affecter{nombreChiffres}{nombreChiffres + 1}		
+	}
+	\retourner{nombreChiffres}
+}
+\end{algorithme}
+
+\paragraph{prochainNombreDansChaine}
+~\\
+On suppose que les chiffres de 0 à 9 se suivent dans le systeme de codage des caracteres utilisés (comme c'est le cas en ASCII).\\
+\begin{algorithme}
+\fonction
+{prochainNombreDansChaine}
+{string : \chaine}
+{\naturel}
+{
+	i, nombre : \naturel \\
+	debut : \booleen
+}
+{
+	\affecter{debut}{Vrai}
+	\affecter{nombre}{0}
+	\affecter{i}{1}
+	\tantque{niemeCaractere(string, i) $\neq$ FINCHAINE et (estUnChiffre(niemeCaractere(string, i)) ou debut)}
+	{
+		\sialors{estUnChiffre(niemeCaractere(string, i))}
+		{
+			\affecter{debut}{Faux}
+			\affecter{nombre}{nombre*10}
+			\affecter{nombre}{nombre+caractereEnNaturel(niemeCaractere) - ord('0')}
+		}
+		\affecter{i}{i+1}
+	}
+	\retourner{nombre}
+}
+\end{algorithme}
+
+\paragraph{estUnChiffre}
+\begin{algorithme}
+\fonction
+{estUnChiffre}
+{c : Caractere}
+{\booleen}
+{}
+{\retourner{ord(c) $\geq$ ord('0') et ord(c) $\leq$ ord('9')}}
+\end{algorithme}

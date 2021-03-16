@@ -1,0 +1,44 @@
+%Conception détaillée
+\subsection{Coup}
+	\subsubsection{Type}
+		\begin{algorithme}
+			\begin{enregistrement}{Coup}
+				\champEnregistrement{position}{Position}
+				\champEnregistrement{couleur}{Couleur}
+			\end{enregistrement}
+		\end{algorithme}
+
+	\subsubsection{Fonctions TAD}
+		\paragraph{creerCoup}
+			\begin{algorithme}
+				\fonction{creerCoup}{pos : Position; coul : Couleur}{Coup}{res : Coup}
+				{
+					\affecter{res.position}{pos}
+					\affecter{res.couleur}{coul}
+					\retourner{res}
+				}
+			\end{algorithme}
+
+		\paragraph{obtenirCouleur}
+			\begin{algorithme}
+			\fonction
+			{obtenirCouleur}
+			{coup : Coup}
+			{Couleur}
+			{}
+			{
+			{\retourner{coup.couleur}}
+			}
+			\end{algorithme}
+
+		\paragraph{obtenirPosition}
+			\begin{algorithme}
+			\fonction
+			{obtenirPosition}
+			{coup : Coup}
+			{Position}
+			{}
+			{
+			{\retourner{coup.position}}
+			}
+			\end{algorithme}

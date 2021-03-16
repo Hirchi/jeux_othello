@@ -1,0 +1,135 @@
+\subsubsection{testPlateau}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{listings}
+ 
+\definecolor{darkWhite}{rgb}{0.94,0.94,0.94}
+ 
+\lstset{
+  aboveskip=3mm,
+  belowskip=-2mm,
+  backgroundcolor=\color{darkWhite},
+  basicstyle=\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  commentstyle=\color{red},
+  deletekeywords={...},
+  escapeinside={\%*}{*)},
+  extendedchars=true,
+  framexleftmargin=16pt,
+  framextopmargin=3pt,
+  framexbottommargin=6pt,
+  frame=tb,
+  keepspaces=true,
+  keywordstyle=\color{blue},
+  language=C,
+  literate=
+  {²}{{\textsuperscript{2}}}1
+  {⁴}{{\textsuperscript{4}}}1
+  {⁶}{{\textsuperscript{6}}}1
+  {⁸}{{\textsuperscript{8}}}1
+  {€}{{\euro{}}}1
+  {é}{{\'e}}1
+  {è}{{\`{e}}}1
+  {ê}{{\^{e}}}1
+  {ë}{{\¨{e}}}1
+  {É}{{\'{E}}}1
+  {Ê}{{\^{E}}}1
+  {û}{{\^{u}}}1
+  {ù}{{\`{u}}}1
+  {â}{{\^{a}}}1
+  {à}{{\`{a}}}1
+  {á}{{\'{a}}}1
+  {ã}{{\~{a}}}1
+  {Á}{{\'{A}}}1
+  {Â}{{\^{A}}}1
+  {Ã}{{\~{A}}}1
+  {ç}{{\c{c}}}1
+  {Ç}{{\c{C}}}1
+  {õ}{{\~{o}}}1
+  {ó}{{\'{o}}}1
+  {ô}{{\^{o}}}1
+  {Õ}{{\~{O}}}1
+  {Ó}{{\'{O}}}1
+  {Ô}{{\^{O}}}1
+  {î}{{\^{i}}}1
+  {Î}{{\^{I}}}1
+  {í}{{\'{i}}}1
+  {Í}{{\~{Í}}}1,
+  morekeywords={*,...},
+  numbers=left,
+  numbersep=10pt,
+  numberstyle=\tiny\color{black},
+  rulecolor=\color{black},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  stepnumber=1,
+  stringstyle=\color{gray},
+  tabsize=4,
+  title=\lstname,
+}
+ 
+\begin{document}
+ 
+\begin{lstlisting}
+#include<stdlib.h>
+#include<CUnit/Basic.h>
+#include "plateau.h"
+
+void test_plateau_creation_dimention_largeur(void)
+{
+  Plateau plateau = Plateau_creePlateau(8,8);
+  int res = Plateau_obtenir_Largeur(plateau) == 8;
+  Plateau_detruitPlateau(&plateau);
+  CU_ASSERT_TRUE(res);
+}
+
+void test_plateau_creation_dimention_hauteur(void)
+{
+  Plateau plateau = Plateau_creePlateau(8,8);
+  int res = Plateau_obtenir_Hauteur(plateau) == 8;
+  Plateau_detruitPlateau(&plateau);
+  CU_ASSERT_TRUE(res);
+}
+
+void test_plateau_obtenirCellule(void)
+{
+
+    Plateau plateau = Plateau_creePlateau(8,8);
+    Position positionHG = Position_creerPosition(1,1);
+    Cellule celluleHG = *Plateau_obtenirCellule(plateau, positionHG);
+    int res = Position_egale(positionHG,Cellule_obtenirPosition(celluleHG));
+    Plateau_detruitPlateau(&plateau);
+    CU_ASSERT_TRUE(res);
+}
+
+void test_plateau_creation_pion_Debut(void)
+{
+  Plateau plateau = Plateau_creePlateau(8,8);
+  Plateau_initialisePionDebut(&plateau);
+
+  Position blanc1 = Position_creerPosition(4,4);
+  Position blanc2 = Position_creerPosition(5,5);
+  Position noir1 = Position_creerPosition(4,5);
+  Position noir2 = Position_creerPosition(5,4);
+  Cellule cellBlanc1 = *Plateau_obtenirCellule(plateau,blanc1);
+  Cellule cellBlanc2 = *Plateau_obtenirCellule(plateau,blanc2);
+  Cellule cellNoir1 = *Plateau_obtenirCellule(plateau,noir1);
+  Cellule cellNoir2 = *Plateau_obtenirCellule(plateau,noir2);
+
+  int res = Couleur_estBlanc(Cellule_obtenirCouleur(cellBlanc1));
+  res *= Couleur_estBlanc(Cellule_obtenirCouleur(cellBlanc2));
+  res *= Couleur_estNoir(Cellule_obtenirCouleur(cellNoir1));
+  res *= Couleur_estNoir(Cellule_obtenirCouleur(cellNoir2));
+
+  Plateau_detruitPlateau(&plateau);
+  CU_ASSERT_TRUE(res);
+}
+\end{lstlisting}
+ 
+\end{document}

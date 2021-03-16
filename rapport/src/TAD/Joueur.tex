@@ -1,0 +1,41 @@
+%TAD
+\subsection{Joueur}
+  \begin{tad}
+    \tadNom{Joueur}
+    \tadParametres{}
+    \tadDependances{Coup, Plateau, Stratégie, Couleur, \chaine, \naturel}
+
+
+    \begin{tadOperations}{Joueur}
+      \tadOperation{creerJoueur}{\tadDeuxParams{Strategie}{Couleur}}{\tadUnParam{Joueur}}
+      \tadOperation{creerJoueurNiveau}{\tadTroisParams{Strategie}{Couleur}{\naturel}}{\tadUnParam{Joueur}}
+      \tadOperation{obtenirStratégie}{\tadUnParam{Joueur}}{\tadUnParam{Stratégie}}
+      \tadOperation{obtenirCouleur}{\tadUnParam{Joueur}}{\tadUnParam{Couleur}}
+      \tadOperation{obtenirNom}{\tadUnParam{Joueur}}{\tadUnParam{\chaine}}
+      \tadOperation{obtenirCoup}{\tadDeuxParams{Plateau}{Joueur}}{\tadUnParam{Coup}}
+      \tadOperation{obtenirNiveau}{\tadUnParam{Joueur}}
+    \end{tadOperations}
+    
+    \begin{tadSemantiques}{Joueur}
+    	\tadSemantique{creerJoueur}{Cree un joueur avec une stratégie et une couleur et lui attribue un nom en fonction de cette dernière}
+    	\tadSemantique{creerJoueurNiveau}{Cree un joueur avec une stratégie, un niveau (pour l'intelligence artificielle) et une couleur et lui attribue un nom en fonction de cette dernière}
+    	\tadSemantique{obtenirStrategie}{Obtient la stratégie d'obtention de coup d'un joueur}
+    	\tadSemantique{obtenirCouleur}{Obtient la couleur d'un joueur}
+    	\tadSemantique{obtenirNom}{Obtient le nom d'un joueur}
+    	\tadSemantique{obtenirCoup}{Obtient un coup pour un joueur en fonction de sa stratégie}
+    	\tadSemantique{obtenirNiveau}{Obtient le niveau de difficulté de l'intelligence artificielle du joueur}
+    \end{tadSemantiques}
+    
+    \begin{tadAxiomes}
+    	\tadAxiome{obtenirStrategie(creerJoueur(strat, couleur)) == strat}
+    	\tadAxiome{obtenirCouleur(creerJoueur(strat, couleur)) == strat}
+    	\tadAxiome{obtenirStrategie(creerJoueurNiveau(strat, couleur, niveau)) == strat}
+    	\tadAxiome{obtenirCouleur(creerJoueurNiveau(strat, couleur, niveau)) == strat}
+    	\tadAxiome{obtenirNiveau(creerJoueurNiveau(strat, couleur, niveau)) == niveau}
+    \end{tadAxiomes}
+    
+    \begin{tadPreconditions}{}
+      \tadPrecondition{obtenirNiveau(joueur)}{obtenirStrategie(joueur) $\neq$ Humain()}
+    \end{tadPreconditions}
+
+  \end{tad}
